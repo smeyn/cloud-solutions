@@ -35,6 +35,7 @@ import org.apache.beam.sdk.io.gcp.spanner.SpannerConfig;
 import org.apache.beam.sdk.io.gcp.spanner.SpannerIO;
 import org.apache.beam.sdk.io.gcp.spanner.changestreams.model.DataChangeRecord;
 import org.apache.beam.sdk.options.Default;
+import org.apache.beam.sdk.options.Description;
 import org.apache.beam.sdk.options.PipelineOptionsFactory;
 import org.apache.beam.sdk.options.SdkHarnessOptions;
 import org.apache.beam.sdk.transforms.DoFn;
@@ -99,6 +100,12 @@ public class SpannerToBigQueryUsingCdc {
     int getSyncPointDetectionFrequencyInSeconds();
 
     void setSyncPointDetectionFrequencyInSeconds(int value);
+
+    @Description("Specify a dedicated meta database for the change stream")
+    @Default.String("cdc-meta")
+    String getCdcMetadataDatabase();
+    
+    void setCdcMetadataDatabase(String value);
   }
 
   /**
@@ -128,7 +135,7 @@ public class SpannerToBigQueryUsingCdc {
                 .withSpannerConfig(spannerConfig)
                 .withChangeStreamName(options.getSpannerOrdersStreamId())
                 .withMetadataInstance(options.getSpannerInstanceId())
-                .withMetadataDatabase("cdc-meta")
+                .withMetadataDatabase(options.getCdcMetadataDatabase())
                 .withRpcPriority(RpcPriority.MEDIUM)
                 .withInclusiveStartAt(readFrom));
 
