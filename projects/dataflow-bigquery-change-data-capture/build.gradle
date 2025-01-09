@@ -28,14 +28,14 @@ repositories {
 }
 
 
-def dataflowBeamVersion = '2.55.1'
+def dataflowBeamVersion = '2.61.0'
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 
     toolchain {
-        languageVersion = JavaLanguageVersion.of(11)
+        languageVersion = JavaLanguageVersion.of(17)
     }
 }
 
@@ -48,6 +48,7 @@ tasks.withType(JavaCompile) {
 
 dependencies {
     implementation platform('com.google.cloud:libraries-bom:26.29.0')
+
 
     implementation group: 'org.apache.beam', name: 'beam-sdks-java-core', version: dataflowBeamVersion
     implementation(group: 'org.apache.beam', name: 'beam-runners-google-cloud-dataflow-java', version: dataflowBeamVersion) {

@@ -67,7 +67,7 @@ public class SpannerToBigQueryUsingCdc {
 
     void setSpannerOrdersStreamId(String value);
 
-    @Default.String("order")
+    @Default.String("orders")
     String getBigQueryOrdersTableName();
 
     void setBigQueryOrdersTableName(String value);
@@ -127,6 +127,8 @@ public class SpannerToBigQueryUsingCdc {
             SpannerIO.readChangeStream()
                 .withSpannerConfig(spannerConfig)
                 .withChangeStreamName(options.getSpannerOrdersStreamId())
+                .withMetadataInstance(options.getSpannerInstanceId())
+                .withMetadataDatabase("cdc-meta")
                 .withRpcPriority(RpcPriority.MEDIUM)
                 .withInclusiveStartAt(readFrom));
 

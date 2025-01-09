@@ -53,7 +53,7 @@ public class OrderMutation {
       StringUtf8Coder.of().encode(order.getDescription(), outStream);
 
       RowMutationInformation rowMutationInformation = value.getMutationInformation();
-      VarLongCoder.of().encode(rowMutationInformation.getSequenceNumber(), outStream);
+      StringUtf8Coder.of().encode(rowMutationInformation.getChangeSequenceNumber(), outStream);
       StringUtf8Coder.of().encode(rowMutationInformation.getMutationType().name(), outStream);
     }
 
